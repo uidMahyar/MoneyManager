@@ -1,0 +1,57 @@
+/* خزانه — استایل‌های سفارشی
+   این فایل قبلاً به‌صورت رشته داخل خود app.js تزریق می‌شد؛
+   الان جدا شده تا سه بخش HTML/CSS/JS از هم مجزا باشن. */
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #14100c;
+  --ink: #f0e9dc;
+  --ink-muted: #8c8272;
+  --brass: #c19a56;
+  --inkblue: #5478a0;
+  --jade: #5e9070;
+  --rust: #b25b4a;
+}
+
+.kz-root { font-family: 'Vazirmatn', Tahoma, sans-serif; background-color: var(--bg); color: var(--ink); }
+.kz-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-variant-numeric: tabular-nums; }
+.kz-muted { color: var(--ink-muted); }
+.kz-ledger-lines { background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(240,233,220,0.025) 32px); }
+
+.kz-text-brass { color: var(--brass); }
+.kz-text-inkblue { color: var(--inkblue); }
+.kz-text-jade { color: var(--jade); }
+.kz-text-rust { color: var(--rust); }
+
+.kz-bg-brass { background-color: var(--brass); }
+.kz-bg-jade { background-color: var(--jade); }
+.kz-bg-rust { background-color: var(--rust); }
+
+.kz-tint-brass { background-color: rgba(193,154,86,0.14); }
+.kz-tint-inkblue { background-color: rgba(84,120,160,0.14); }
+.kz-tint-jade { background-color: rgba(94,144,112,0.16); }
+.kz-tint-rust { background-color: rgba(178,91,74,0.16); }
+
+.kz-border-brass { border-color: rgba(193,154,86,0.4); }
+.kz-border-inkblue { border-color: rgba(84,120,160,0.4); }
+
+.kz-surface { background-color: rgba(240,233,220,0.04); }
+.kz-surface-2 { background-color: rgba(240,233,220,0.07); }
+
+.kz-hairline { border-color: rgba(240,233,220,0.1); }
+.kz-divide > * + * { border-top: 1px solid rgba(240,233,220,0.08); }
+
+@keyframes kz-slideup { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.kz-animate-slideup { animation: kz-slideup .28s cubic-bezier(.32,.72,0,1); }
+
+.kz-noscroll::-webkit-scrollbar { display: none; }
+.kz-noscroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+.kz-root input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.85); opacity: .7; cursor: pointer; }
+.kz-root button:focus-visible, .kz-root input:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kz-animate-slideup { animation: none; }
+  .kz-root * { transition-duration: 0.01ms !important; }
+}
