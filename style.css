@@ -1,0 +1,233 @@
+/* =============================================================================
+   خزانه — CSS کامل و مستقل (بدون Tailwind از CDN)
+   این فایل شامل دو بخشه:
+   ۱) پیاده‌سازی دستی همون کلاس‌های Tailwind که در app.js استفاده شدن
+   ۲) استایل‌های سفارشی تم «خزانه» (رنگ‌ها، فونت، افکت‌های خاص)
+   چون این اپ باید PWA آفلاین کامل باشه، نمی‌تونیم به CDN تیلویند وابسته باشیم.
+   ============================================================================= */
+
+/* توجه: قبلاً اینجا یک بلوک @font-face با src: local('Vazirmatn') بود.
+   حذفش کردیم چون خودِ وجود یک @font-face با این اسم، مرورگر رو از رفتن به
+   فونت بعدی در فهرست fallback (Vazir, Tahoma, ...) منصرف می‌کنه — اگه
+   local() پیدا نشه، اون font-family کلاً با خطا علامت می‌خوره و رشته‌ی
+   fallback بعد از خودش هم اجرا نمی‌شه. بدون این بلوک، مرورگر مستقیم سراغ
+   فونت‌های واقعی نصب‌شده روی سیستم می‌ره. */
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+:root {
+  --bg: #14100c;
+  --ink: #f0e9dc;
+  --ink-muted: #8c8272;
+  --brass: #c19a56;
+  --inkblue: #5478a0;
+  --jade: #5e9070;
+  --rust: #b25b4a;
+}
+
+/* ---------- پایه‌ی تم ----------
+   اولویت فونت: اول فونت‌های فارسی نصب‌شونده روی خودِ دستگاه (Vazirmatn/Vazir/
+   IRANSans اگه کاربر نصب کرده باشه)، بعد فونت‌های فارسی/عربی که سیستم‌عامل‌ها
+   از قبل با خودشون دارن (Tahoma و Segoe UI روی ویندوز، Geeza Pro روی مک/آیفون،
+   Noto Naskh Arabic روی اندروید)، و در آخر یک sans-serif عمومی. این یعنی بدون
+   نیاز به دانلود از اینترنت، حروف فارسی درست به‌هم می‌چسبن. */
+.kz-root {
+  font-family: 'Vazirmatn', Vazir, 'IRANSans', Tahoma, 'Segoe UI', 'Geeza Pro', 'Noto Naskh Arabic', 'Arial', sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+}
+.kz-mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-variant-numeric: tabular-nums; }
+.kz-muted { color: var(--ink-muted); }
+.kz-ledger-lines {
+  background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(240,233,220,0.025) 32px);
+}
+.kz-text-brass { color: var(--brass); }
+.kz-text-inkblue { color: var(--inkblue); }
+.kz-text-jade { color: var(--jade); }
+.kz-text-rust { color: var(--rust); }
+.kz-bg-brass { background-color: var(--brass); }
+.kz-bg-jade { background-color: var(--jade); }
+.kz-bg-rust { background-color: var(--rust); }
+.kz-tint-brass { background-color: rgba(193,154,86,0.14); }
+.kz-tint-inkblue { background-color: rgba(84,120,160,0.14); }
+.kz-tint-jade { background-color: rgba(94,144,112,0.16); }
+.kz-tint-rust { background-color: rgba(178,91,74,0.16); }
+.kz-border-brass { border-color: rgba(193,154,86,0.4); }
+.kz-border-inkblue { border-color: rgba(84,120,160,0.4); }
+.kz-surface { background-color: rgba(240,233,220,0.04); }
+.kz-hairline { border-color: rgba(240,233,220,0.1); }
+.kz-divide > * + * { border-top: 1px solid rgba(240,233,220,0.08); }
+
+@keyframes kz-slideup { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.kz-animate-slideup { animation: kz-slideup .28s cubic-bezier(.32,.72,0,1); }
+
+.kz-noscroll::-webkit-scrollbar { display: none; }
+.kz-noscroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+.kz-root input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.85); opacity: .7; cursor: pointer; }
+.kz-root button:focus-visible, .kz-root input:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kz-animate-slideup { animation: none; }
+  .kz-root * { transition-duration: 0.01ms !important; }
+}
+
+/* ---------- معادل دستی کلاس‌های Tailwind مورد استفاده ---------- */
+
+/* layout / display */
+.flex { display: flex; }
+.grid { display: grid; }
+.block { display: block; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.min-h-screen { min-height: 100vh; }
+.max-h-screen { max-height: 100vh; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+.overflow-y-auto { overflow-y: auto; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.top-0 { top: 0; }
+.bottom-0 { bottom: 0; }
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.z-50 { z-index: 50; }
+
+/* flex helpers */
+.flex-1 { flex: 1 1 0%; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.shrink-0 { flex-shrink: 0; }
+.min-w-0 { min-width: 0; }
+
+/* grid */
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* gap */
+.gap-1 { gap: 0.25rem; }
+.gap-1\.5 { gap: 0.375rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.space-y-1\.5 > * + * { margin-top: 0.375rem; }
+
+/* sizing */
+.w-2 { width: 0.5rem; }
+.w-2\.5 { width: 0.625rem; }
+.w-8 { width: 2rem; }
+.w-9 { width: 2.25rem; }
+.w-10 { width: 2.5rem; }
+.w-14 { width: 3.5rem; }
+.w-20 { width: 5rem; }
+.w-52 { width: 13rem; }
+.w-full { width: 100%; }
+.w-px { width: 1px; }
+.h-1 { height: 0.25rem; }
+.h-2 { height: 0.5rem; }
+.h-2\.5 { height: 0.625rem; }
+.h-8 { height: 2rem; }
+.h-9 { height: 2.25rem; }
+.h-10 { height: 2.5rem; }
+.h-14 { height: 3.5rem; }
+.h-20 { height: 5rem; }
+.h-52 { height: 13rem; }
+.max-w-lg { max-width: 32rem; }
+.max-w-sm { max-width: 24rem; }
+
+/* spacing */
+.mx-auto { margin-left: auto; margin-right: auto; }
+.my-1 { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-5 { margin-bottom: 1.25rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-0\.5 { margin-top: 0.125rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-5 { margin-top: 1.25rem; }
+.p-1 { padding: 0.25rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-5 { padding: 1.25rem; }
+.p-6 { padding: 1.5rem; }
+.px-3\.5 { padding-left: 0.875rem; padding-right: 0.875rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+.py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.pb-6 { padding-bottom: 1.5rem; }
+.pb-8 { padding-bottom: 2rem; }
+.pb-28 { padding-bottom: 7rem; }
+.pt-3 { padding-top: 0.75rem; }
+.pt-6 { padding-top: 1.5rem; }
+
+/* border & radius */
+.border { border-width: 1px; border-style: solid; border-color: rgba(240,233,220,0.1); }
+.border-t { border-top-width: 1px; border-top-style: solid; border-color: rgba(240,233,220,0.1); }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-xl { border-radius: 0.75rem; }
+.rounded-2xl { border-radius: 1rem; }
+.rounded-t-3xl { border-top-left-radius: 1.5rem; border-top-right-radius: 1.5rem; }
+.rounded-full { border-radius: 9999px; }
+
+/* typography */
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.text-center { text-align: center; }
+.leading-tight { line-height: 1.25; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.whitespace-nowrap { white-space: nowrap; }
+
+/* misc */
+.outline-none { outline: none; }
+.pointer-events-none { pointer-events: none; }
+.transition { transition-property: color, background-color, border-color, opacity, box-shadow, transform, filter; transition-duration: 150ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* حالت‌های تعاملی — چون بدون کامپایلر Tailwind هستیم، این‌ها رو با
+   pseudo-class دستی می‌نویسیم به‌جای dynamic utility class */
+button:active.active\:scale-95,
+.active\:scale-95:active { transform: scale(0.95); }
+.active\:brightness-110:active { filter: brightness(1.1); }
+button:disabled.disabled\:opacity-30,
+.disabled\:opacity-30:disabled { opacity: 0.3; }
+button:disabled.disabled\:pointer-events-none,
+.disabled\:pointer-events-none:disabled { pointer-events: none; }
+
+/* دکمه‌ها و اینپوت‌ها بدون استایل پیش‌فرض مرورگر */
+button {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+input {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* اسکرول‌بار عمودی مودال‌ها هم مثل بقیه‌ی جاها مخفی و ظریف باشه */
+.kz-root ::-webkit-scrollbar { width: 6px; }
+.kz-root ::-webkit-scrollbar-thumb { background: rgba(240,233,220,0.15); border-radius: 3px; }
